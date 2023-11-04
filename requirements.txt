@@ -1,0 +1,6 @@
+fastapi
+motor
+pyyaml
+pydantic-settings
+uvicorn
+jinja2
