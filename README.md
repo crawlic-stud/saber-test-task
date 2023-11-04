@@ -15,25 +15,26 @@ Application that provides a microservice to get all dependencies for building th
 
 ## How to run:
 
-0. Copy ```.env.example``` to ```.env``` and replace placeholder values (if needed)
-
-
+0. Copy ``.env.example`` to ``.env`` and replace placeholder values (if needed)
 1. Run with docker-compose:
 
 ```sh
 docker-compose up
 ```
 
-2. Run with existing database (need to change .env file)
+---
+
+If you have an existing database (need to change .env file)
 
 ```sh
 python src/main.py
 ```
-or: 
+
+or with docker-compose:
+
 ```sh
 docker-compose up prod
 ```
-
 
 ## Contacts:
 
