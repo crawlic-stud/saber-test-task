@@ -20,7 +20,7 @@ def _get_all_tasks_dependencies(
         current_result = set()
 
     if not tasks:
-        return current_result
+        return list(current_result)
 
     new_tasks = []
     for task in tasks:

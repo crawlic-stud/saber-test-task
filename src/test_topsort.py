@@ -7,7 +7,7 @@ from services.prepare_data import create_graph, prepare_tasks
 from services.yaml_ops import read_builds, read_tasks
 
 
-def get_params_from_initial_data() -> tuple[dict[str, BuildGraphNode], list[list[str]]]:
+def get_params_from_initial_data() -> list[dict[str, BuildGraphNode]]:
     params = []
     tasks = read_tasks()
     builds = read_builds()

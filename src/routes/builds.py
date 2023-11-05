@@ -35,6 +35,6 @@ async def put_builds_yaml_file(
     file: UploadFile = Depends(verify_builds_yaml),
 ) -> Builds:
     # after dependency injection we get bytes, not UploadFile
-    BUILDS_PATH.write_bytes(file)
+    BUILDS_PATH.write_bytes(file)  # type: ignore
     builds, _ = await prepare_builds_and_tasks()
     return builds

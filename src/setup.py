@@ -24,7 +24,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="Build Master", lifespan=lifespan)
+app = FastAPI(title="Build Master", lifespan=lifespan) # type: ignore
 app.include_router(tasks.router)
 app.include_router(builds.router)
 

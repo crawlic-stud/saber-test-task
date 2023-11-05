@@ -35,6 +35,12 @@ async def verify_yaml_structure(
     model: type[Tasks] | type[Builds],
     file: UploadFile,
 ) -> bytes:
+    if file.filename is None:
+        raise exceptions.BadRequest(
+            detail="File with no filename was provided",
+            message="Ensure that your file has a name and an extension",
+        )
+
     if not file.filename.endswith(".yaml"):
         raise exceptions.BadRequest(
             detail=f"Expected a .yaml file, not .{file.filename.split('.')[-1]} file",

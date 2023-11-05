@@ -1,22 +1,26 @@
 import asyncio
 import logging
 
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
+from motor.motor_asyncio import (
+    AsyncIOMotorClient,
+    AsyncIOMotorCollection,
+    AsyncIOMotorDatabase,
+)
 
 import exceptions
+import settings
 from models.task import Tasks
-from settings import db
 from models.build import Build, Builds, BuildGraph
 from services.prepare_data import create_graph, prepare_tasks
 from services.yaml_ops import read_tasks, read_builds
 
 
 logger = logging.getLogger("db")
-mongo_client = AsyncIOMotorClient(db.get_url())
+mongo_client = AsyncIOMotorClient(settings.db.get_url())
 mongo_client.get_io_loop = asyncio.get_running_loop
-db: AsyncIOMotorCollection = mongo_client[db.DB_NAME]
+db: AsyncIOMotorDatabase = mongo_client[settings.db.DB_NAME]
 
-build_graphs_db = db["build_graphs"]
+build_graphs_db: AsyncIOMotorCollection = db["build_graphs"]
 
 
 async def upsert_build_graphs(

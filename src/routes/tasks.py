@@ -40,6 +40,6 @@ async def put_tasks_yaml_file(
     file: UploadFile = Depends(verify_tasks_yaml),
 ) -> Tasks:
     # after dependency we get bytes, not UploadFile
-    TASKS_PATH.write_bytes(file)
+    TASKS_PATH.write_bytes(file) # type: ignore
     _, tasks = await prepare_builds_and_tasks()
     return tasks
