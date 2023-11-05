@@ -9,9 +9,13 @@ Application that provides a microservice to get all dependencies for building th
 ## Technologies used:
 
 - FastAPI
+- uvicorn
 - Pydantic 2
 - MongoDB (motor)
 - pyYAML
+- Docker + Docker Compose
+- Pytest
+
 
 ## How to run:
 
