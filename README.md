@@ -1,4 +1,4 @@
-# saber-test-task
+# Saber's Test Task
 
 Test task from [Saber](https://saber.games/)
 
