@@ -34,10 +34,10 @@ def read_builds() -> Builds:
 async def verify_yaml_structure(
     model: type[Tasks] | type[Builds],
     file: UploadFile,
-) -> UploadFile:
+) -> bytes:
     if not file.filename.endswith(".yaml"):
         raise exceptions.BadRequest(
-            detail=f"Expected a .yaml file, not .{file.filename.split('.')[-1]}",
+            detail=f"Expected a .yaml file, not .{file.filename.split('.')[-1]} file",
             message="Ensure that you are sending a correct YAML file.",
         )
     try:

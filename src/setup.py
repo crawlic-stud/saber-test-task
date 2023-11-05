@@ -29,6 +29,11 @@ app.include_router(tasks.router)
 app.include_router(builds.router)
 
 
+@app.get("/")
+async def health_check():
+    return {"status": True}
+
+
 @app.exception_handler(AppException)
 async def handle_app_exception(_: Request, exc: AppException):
     return JSONResponse(

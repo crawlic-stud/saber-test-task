@@ -64,7 +64,7 @@ async def prepare_builds_and_tasks(
     except KeyError as e:
         raise exceptions.BadRequest(
             detail=f"Unexpected task occured: {e}",
-            message="Please ensure that you've added this task through PUT /api/tasks/yaml first",
+            message="Please ensure that you've added this task through PUT /tasks/yaml first",
         )
     await build_graphs_db.create_index("name")
     return builds, tasks

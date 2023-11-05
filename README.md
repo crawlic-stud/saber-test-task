@@ -47,6 +47,19 @@ pip install pytest
 pytest src
 ```
 
+## API description:
+
+ - To view API documentation visit ```http://0.0.0.0:8000/docs``` (by default)
+ - To retrieve tasks for certain build use ```GET /tasks/{build_name}```
+ - To list all available builds use ```GET /builds```
+ - To update ```tasks.yaml``` or ```builds.yaml``` files use ```PUT /tasks/yaml``` and ```PUT /builds/yaml``` respectively
+
+## Possible future improvements:
+
+1. Add CRUD operations to ```/tasks``` and ```/builds```, so we don't have to rely on ```.yaml``` files as the source of truth
+2. Add auth to API endpoints to ensure safety of data
+3. Add more test cases to test important functionality of API's endpoints
+4. Add logging to the core functionality
 
 ## Contacts:
 
