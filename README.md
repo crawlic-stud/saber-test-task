@@ -47,12 +47,37 @@ pip install pytest
 pytest src
 ```
 
+## Application structure:
+
+```sh
+src
+├── exceptions.py           # module for exceptions classes
+├── main.py                 # main entry point
+├── models                  # module for pydantic models 
+│   ├── build.py  
+│   └── task.py
+├── routes                  # module for API routes and FastAPI routers
+│   ├── builds.py
+│   └── tasks.py
+├── services                # module for app's services
+│   ├── database.py         # database interaction service 
+│   ├── docs.py             # service for creating API docs 
+│   ├── prepare_data.py     # service for shaping data 
+│   ├── topological_sort.py # service with Kahn's topsort algorithm
+│   └── yaml_ops.py         # service for YAML files interactions
+├── settings.py             # module with pydantic BaseSettings classes
+├── setup.py                # module to set up the application
+└── test_topsort.py         # module for testing the topsort algorithm
+```
+
+
 ## API description:
 
  - To view API documentation visit ```http://0.0.0.0:8000/docs``` (by default)
  - To retrieve tasks for certain build use ```GET /tasks/{build_name}```
  - To list all available builds use ```GET /builds```
  - To update ```tasks.yaml``` or ```builds.yaml``` files use ```PUT /tasks/yaml``` and ```PUT /builds/yaml``` respectively
+
 
 ## Possible future improvements:
 
