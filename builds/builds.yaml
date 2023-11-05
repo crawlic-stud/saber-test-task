@@ -96,4 +96,6 @@ builds:
   - train_white_leprechauns
   - write_maroon_humans
   - write_purple_leprechauns
-
+- name: test 
+  tasks:  
+  - hahaha

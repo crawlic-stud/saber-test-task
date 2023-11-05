@@ -4,27 +4,29 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from settings import log
-from services.read_yaml import read_tasks, read_builds
-from services.prepare_data import prepare_tasks
-from services.database import upsert_build_graphs, build_graphs_db
+from services.database import prepare_builds_and_tasks
 from exceptions import AppException
 from routes import tasks
+from routes import builds
 
 
 logging.basicConfig(level=log.LEVEL)
+logger = logging.getLogger("api")
 
 
 async def lifespan(_: FastAPI):
-    builds = read_builds()
-    tasks = read_tasks()
-    tasks_lookup = prepare_tasks(tasks.tasks)
-    await upsert_build_graphs(builds, tasks_lookup)
-    await build_graphs_db.create_index("name")
+    try:
+        await prepare_builds_and_tasks()
+    except TypeError:
+        raise RuntimeError(
+            "Either builds/builds.yaml or builds/tasks.yaml is empty. Can not start the application."
+        )
     yield
 
 
 app = FastAPI(title="Build Master", lifespan=lifespan)
 app.include_router(tasks.router)
+app.include_router(builds.router)
 
 
 @app.exception_handler(AppException)

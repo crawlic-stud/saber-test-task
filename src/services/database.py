@@ -3,10 +3,12 @@ import logging
 
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
 
-from settings import db
-from models.build import Builds, BuildGraph
-from services.prepare_data import create_graph
 import exceptions
+from models.task import Tasks
+from settings import db
+from models.build import Build, Builds, BuildGraph
+from services.prepare_data import create_graph, prepare_tasks
+from services.yaml_ops import read_tasks, read_builds
 
 
 logger = logging.getLogger("db")
@@ -37,6 +39,32 @@ async def get_build_by_name(name: str) -> BuildGraph:
     if raw_build is None:
         raise exceptions.NotFound(
             detail=f"Build with {name=} wasn't found.",
-            message="Ensure that this build exist or update YAML file via POST /api/builds/yaml",
+            message="Ensure that this build exist or update YAML file in /builds",
         )
     return BuildGraph(**raw_build)
+
+
+async def get_all_builds() -> list[Build]:
+    cursor = build_graphs_db.find()
+    result = []
+    async for item in cursor:
+        result.append(Build(**item))
+    return result
+
+
+async def prepare_builds_and_tasks(
+    tasks: Tasks | None = None,
+    builds: Builds | None = None,
+) -> tuple[Builds, Tasks]:
+    builds = read_builds() if not builds else builds
+    tasks = read_tasks() if not tasks else tasks
+    tasks_lookup = prepare_tasks(tasks.tasks)
+    try:
+        await upsert_build_graphs(builds, tasks_lookup)
+    except KeyError as e:
+        raise exceptions.BadRequest(
+            detail=f"Unexpected task occured: {e}",
+            message="Please ensure that you've added this task through PUT /api/tasks/yaml first",
+        )
+    await build_graphs_db.create_index("name")
+    return builds, tasks

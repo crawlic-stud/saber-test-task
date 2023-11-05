@@ -1,5 +1,10 @@
+import logging
+
 from models.task import Task
 from models.build import BuildGraphNode
+
+
+logger = logging.getLogger("data")
 
 
 def prepare_tasks(tasks: list[Task]) -> dict[str, list[str]]:
@@ -21,7 +26,6 @@ def _get_all_tasks_dependencies(
     for task in tasks:
         new_tasks.extend(tasks_lookup[task])
         current_result.add(task)
-        # print("added:", task)
     return _get_all_tasks_dependencies(new_tasks, tasks_lookup, current_result)
 
 

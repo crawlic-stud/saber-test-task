@@ -11,6 +11,8 @@ services:
       - .env
     ports:
       - "${APP_PORT}:${APP_PORT}"
+    volumes:
+      - ./builds:/builds
   mongo:
     restart: always
     image: mongo:latest
