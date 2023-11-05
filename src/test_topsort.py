@@ -22,6 +22,8 @@ def verify_topsort(sorted_nodes: list[str], graph: dict[str, BuildGraphNode]):
     for node in sorted_nodes:
         # delete current node
         node_value = graph.pop(node)
+        # if we deleted the node with degree=0,
+        # then this node is correctly placed 
         assert node_value.degree == 0
         # update degree for connected nodes
         for connected_node in node_value.nodes:
