@@ -2,6 +2,6 @@ fastapi
 motor
 pyyaml
 pydantic-settings
+python-multipart
 uvicorn
 jinja2
-python-multipart
